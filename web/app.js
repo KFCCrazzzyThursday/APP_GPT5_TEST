@@ -289,7 +289,7 @@
       this.seenStates[this.activeIndex] = ok ? "ok" : "weak";
       if (ok && this.stage === "weakloop") this.weakSet.delete(w.word);
       if (!ok) this.weakSet.add(w.word);
-      await callApi("commit_review", w.word, null);
+      await callApi("commit_review", w.word, ok ? 1.0 : 0.0);
       await callApi("update_score", w.word, ok ? 1.0 : 0.0);
       await refreshStats();
       this._updateProgress();
@@ -308,7 +308,7 @@
       await callApi("record_signal_tool", w.word, "verify", "verified_wrong");
       this.seenStates[this.activeIndex] = "weak";
       this.weakSet.add(w.word);
-      await callApi("commit_review", w.word, null);
+      await callApi("commit_review", w.word, 0.0);
       await callApi("update_score", w.word, 0.0);
       await refreshStats();
       this._updateProgress();

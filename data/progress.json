@@ -2484,10 +2484,10 @@
             }
           }
         ],
-        "activeIndex": 1,
+        "activeIndex": 2,
         "seenStates": [
           "weak",
-          "todo",
+          "ok",
           "todo",
           "todo",
           "todo",
