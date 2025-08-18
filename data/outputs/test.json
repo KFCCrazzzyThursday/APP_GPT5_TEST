@@ -1,0 +1,637 @@
+{
+  "meta": {
+    "source": "C:\\Users\\liyj3\\Desktop\\English\\APP\\data\\outputs\\output_0.json",
+    "model": "gpt-5-chat",
+    "count": 2564,
+    "status": "complete",
+    "batch_size": 10
+  },
+  "entries": [
+    {
+      "word": "obedience",
+      "meaning_zh": "n. 服从，顺从；遵守（法律、规则、命令等）；恭顺（尤指对权威或长辈的态度）",
+      "pos": "noun",
+      "synonyms_en": [
+        "compliance",
+        "submission",
+        "conformity",
+        "observance",
+        "subservience"
+      ],
+      "phrases": [
+        {
+          "phrase": "blind obedience",
+          "meaning_zh": "盲目服从"
+        },
+        {
+          "phrase": "in obedience to",
+          "meaning_zh": "遵照；按照"
+        },
+        {
+          "phrase": "absolute obedience",
+          "meaning_zh": "绝对服从"
+        }
+      ],
+      "example": {
+        "en": "The soldiers acted in strict obedience to the orders given by their commander.",
+        "zh": "士兵们严格遵照指挥官的命令行事。"
+      },
+      "confusions": [
+        {
+          "with": "compliance",
+          "tip_zh": "compliance 常用于遵守规则、法规或标准，语气较正式；obedience 更强调对权威或命令的服从。"
+        },
+        {
+          "with": "loyalty",
+          "tip_zh": "loyalty 是忠诚，强调感情和信念上的忠心；obedience 是行为上的服从。"
+        }
+      ],
+      "model_notes": "该词为不可数名词，常与 to 搭配（obedience to sb./sth.），在宗教、军事、法律等语境中高频出现。考试中常考其与 in obedience to（遵照）及 blind obedience（盲目服从）的搭配。注意与 compliance、loyalty 等区分。",
+      "srs": {
+        "review_count": 6,
+        "ease": 2.3626500000000004,
+        "interval_days": 6.51056061605415,
+        "next_due_ts": 1756004869.2535543,
+        "last_ts": "2025-08-17T14:52:36.833356",
+        "score": 0.6815,
+        "last_score": 1.0,
+        "avg_score": 0.7345833333333333,
+        "history": [
+          {
+            "ts": 1755182978.5091183,
+            "outcome": 0.0,
+            "score": 0.35
+          },
+          {
+            "ts": 1755182991.7276227,
+            "outcome": 1.0,
+            "score": 0.5449999999999999
+          },
+          {
+            "ts": 1755442356.8163273,
+            "outcome": 1.0,
+            "score": 0.6815
+          }
+        ]
+      }
+    },
+    {
+      "word": "modified",
+      "meaning_zh": "adj. 已修改的；经过改良或改进的；（语言学）修饰的。通常指在原有基础上进行调整、改变或优化，以适应新的需求或条件。",
+      "pos": "adjective / verb (past tense & past participle of modify)",
+      "synonyms_en": [
+        "altered",
+        "adapted",
+        "adjusted",
+        "revised",
+        "refined",
+        "amended"
+      ],
+      "phrases": [
+        {
+          "phrase": "modified version",
+          "meaning_zh": "修改版；改良版"
+        },
+        {
+          "phrase": "genetically modified",
+          "meaning_zh": "转基因的；基因改造的"
+        },
+        {
+          "phrase": "modified design",
+          "meaning_zh": "改进设计"
+        }
+      ],
+      "example": {
+        "en": "The company released a modified version of the software to fix security issues.",
+        "zh": "公司发布了一个修改版的软件来修复安全问题。"
+      },
+      "confusions": [
+        {
+          "with": "modifying",
+          "tip_zh": "modified 是 modify 的过去式/过去分词，强调已完成的修改结果；modifying 是现在分词，强调正在进行的修改过程。"
+        },
+        {
+          "with": "modulate",
+          "tip_zh": "modulate 多用于调整音量、频率或信号等技术领域；modified 泛指对事物进行修改或改良。"
+        }
+      ],
+      "model_notes": "modified 常用于科技、工程、法律、语言学等领域，表示对原有事物进行调整或改进。考试中常见于阅读理解、科技类文章以及与 genetically modified（转基因）相关的讨论。注意与 modifying 的时态区别，以及与 alter、revise 等近义词的语气差别。",
+      "srs": {
+        "review_count": 6,
+        "ease": 3.0,
+        "interval_days": 10.35,
+        "next_due_ts": 1756336597.5108254,
+        "last_ts": "2025-08-17T14:52:37.523950",
+        "score": 0.8284999999999998,
+        "last_score": 1.0,
+        "avg_score": 0.8570833333333332,
+        "history": [
+          {
+            "ts": 1755182987.2617626,
+            "outcome": 1.0,
+            "score": 0.6499999999999999
+          },
+          {
+            "ts": 1755182992.0488715,
+            "outcome": 1.0,
+            "score": 0.7549999999999999
+          },
+          {
+            "ts": 1755442357.5108254,
+            "outcome": 1.0,
+            "score": 0.8284999999999998
+          }
+        ]
+      }
+    },
+    {
+      "word": "villa",
+      "meaning_zh": "n. 别墅；豪华住宅；（尤指英国）城郊独立住宅；在某些国家指度假别墅或乡间宅邸。",
+      "pos": "noun",
+      "synonyms_en": [
+        "mansion",
+        "residence",
+        "country house",
+        "estate",
+        "manor"
+      ],
+      "phrases": [
+        {
+          "phrase": "luxury villa",
+          "meaning_zh": "豪华别墅"
+        },
+        {
+          "phrase": "holiday villa",
+          "meaning_zh": "度假别墅"
+        },
+        {
+          "phrase": "villa rental",
+          "meaning_zh": "别墅出租"
+        }
+      ],
+      "example": {
+        "en": "They spent the summer in a beautiful villa overlooking the sea.",
+        "zh": "他们在一栋面朝大海的美丽别墅里度过了夏天。"
+      },
+      "confusions": [
+        {
+          "with": "mansion",
+          "tip_zh": "mansion 通常指城市中的大型豪宅，强调规模和奢华；villa 更常用于指郊区或度假地的独立住宅，带有花园或庭院。"
+        },
+        {
+          "with": "cottage",
+          "tip_zh": "cottage 通常指乡村的小屋，规模较小且朴素；villa 则规模较大且更为豪华。"
+        }
+      ],
+      "model_notes": "常用于旅游、房地产、雅思/托福口语写作中描述住宿类型。英式英语中常指城郊独立住宅，美式英语中多用于度假别墅。注意与 mansion、cottage 等区分。",
+      "srs": {
+        "review_count": 18,
+        "ease": 3.0,
+        "interval_days": 3882.083938521706,
+        "next_due_ts": 2090854411.1682453,
+        "last_ts": "2025-08-17T14:52:38.896962",
+        "score": 0.9625287935,
+        "last_score": 1.0,
+        "avg_score": 0.9646105271944444,
+        "history": [
+          {
+            "ts": 1755182983.6489568,
+            "outcome": 0.0,
+            "score": 0.35
+          },
+          {
+            "ts": 1755182987.8158445,
+            "outcome": 1.0,
+            "score": 0.5449999999999999
+          },
+          {
+            "ts": 1755182987.9961758,
+            "outcome": 1.0,
+            "score": 0.6815
+          },
+          {
+            "ts": 1755182988.360324,
+            "outcome": 1.0,
+            "score": 0.77705
+          },
+          {
+            "ts": 1755182989.3020499,
+            "outcome": 1.0,
+            "score": 0.8439349999999999
+          },
+          {
+            "ts": 1755182989.741879,
+            "outcome": 1.0,
+            "score": 0.8907544999999999
+          },
+          {
+            "ts": 1755182990.260853,
+            "outcome": 1.0,
+            "score": 0.9235281499999999
+          },
+          {
+            "ts": 1755182992.5321662,
+            "outcome": 1.0,
+            "score": 0.9464697049999999
+          },
+          {
+            "ts": 1755442358.8799698,
+            "outcome": 1.0,
+            "score": 0.9625287935
+          }
+        ]
+      }
+    },
+    {
+      "word": "grip",
+      "meaning_zh": "n. 紧握，握力；掌控，控制；（对观众、读者等的）吸引力；（工具或器械的）把手，握柄；v. 紧握，抓牢；吸引（注意力或兴趣）；对……产生强烈影响",
+      "pos": [
+        "n.",
+        "v."
+      ],
+      "synonyms_en": [
+        "grasp",
+        "clutch",
+        "hold",
+        "seize",
+        "clench"
+      ],
+      "phrases": [
+        {
+          "phrase": "lose one's grip",
+          "meaning_zh": "失去控制（局势或能力）"
+        },
+        {
+          "phrase": "get a grip on",
+          "meaning_zh": "掌握，控制；理解"
+        },
+        {
+          "phrase": "in the grip of",
+          "meaning_zh": "受……控制，深陷于……之中"
+        },
+        {
+          "phrase": "tight grip",
+          "meaning_zh": "紧握，牢牢的控制"
+        }
+      ],
+      "example": {
+        "en": "The movie really gripped the audience from start to finish.",
+        "zh": "这部电影从头到尾都牢牢吸引了观众的注意力。"
+      },
+      "confusions": [
+        {
+          "with": "grasp",
+          "tip_zh": "两者都可表示“抓住”，但 grip 更强调物理上的紧握或控制力，也可指吸引力；grasp 除了物理抓住外，更常用于比喻“理解、领会”。"
+        },
+        {
+          "with": "grab",
+          "tip_zh": "grab 多指快速、突然地抓取，带有动作迅速的意味；grip 强调持续、牢固的握持。"
+        }
+      ],
+      "model_notes": "该词为多义词，既可作名词也可作动词，常用于物理意义（握力、握住）和比喻意义（控制、吸引注意力）。在英语考试和口语中常见于固定搭配，如 get a grip, lose one's grip, in the grip of。注意与 grasp、grab 的细微区别。",
+      "srs": {
+        "review_count": 6,
+        "ease": 3.0,
+        "interval_days": 10.35,
+        "next_due_ts": 1756336598.5386922,
+        "last_ts": "2025-08-17T14:52:38.552699",
+        "score": 0.8284999999999998,
+        "last_score": 1.0,
+        "avg_score": 0.8570833333333332,
+        "history": [
+          {
+            "ts": 1755182986.9621804,
+            "outcome": 1.0,
+            "score": 0.6499999999999999
+          },
+          {
+            "ts": 1755182992.9412374,
+            "outcome": 1.0,
+            "score": 0.7549999999999999
+          },
+          {
+            "ts": 1755442358.5386922,
+            "outcome": 1.0,
+            "score": 0.8284999999999998
+          }
+        ]
+      }
+    },
+    {
+      "word": "valid",
+      "meaning_zh": "adj. 有效的，法律或规则上正式认可的；（理由、论点等）有根据的，合理的；（票据、合同等）在规定期限内可使用的；（计算机数据）符合规定格式的。",
+      "pos": "adjective",
+      "synonyms_en": [
+        "legitimate",
+        "sound",
+        "reasonable",
+        "lawful",
+        "authentic"
+      ],
+      "phrases": [
+        {
+          "phrase": "valid reason",
+          "meaning_zh": "正当理由"
+        },
+        {
+          "phrase": "valid passport",
+          "meaning_zh": "有效护照"
+        },
+        {
+          "phrase": "valid contract",
+          "meaning_zh": "有效合同"
+        },
+        {
+          "phrase": "remain valid",
+          "meaning_zh": "继续有效"
+        }
+      ],
+      "example": {
+        "en": "Your ticket is valid for three days after purchase.",
+        "zh": "您的票在购买后三天内有效。"
+      },
+      "confusions": [
+        {
+          "with": "valuable",
+          "tip_zh": "valid 指“有效的、合法的”，强调合法性或合理性；valuable 指“有价值的”，强调价值或重要性。"
+        },
+        {
+          "with": "available",
+          "tip_zh": "valid 强调合法性或有效期；available 强调可获得、可用。"
+        }
+      ],
+      "model_notes": "valid 常用于法律、票据、证件、论证等语境，表示合法有效或有充分理由。考试中常考与法律文件、证件有效期相关的搭配，以及与逻辑推理中“有根据的”义项的区分。注意与 valuable、available 等形近词区分。",
+      "srs": {
+        "review_count": 6,
+        "ease": 2.3626500000000004,
+        "interval_days": 6.51056061605415,
+        "next_due_ts": 1756004869.6105628,
+        "last_ts": "2025-08-17T14:52:37.192335",
+        "score": 0.6815,
+        "last_score": 1.0,
+        "avg_score": 0.7345833333333333,
+        "history": [
+          {
+            "ts": 1755182981.4087772,
+            "outcome": 0.0,
+            "score": 0.35
+          },
+          {
+            "ts": 1755182993.269567,
+            "outcome": 1.0,
+            "score": 0.5449999999999999
+          },
+          {
+            "ts": 1755442357.1733358,
+            "outcome": 1.0,
+            "score": 0.6815
+          }
+        ]
+      }
+    },
+    {
+      "word": "implement",
+      "meaning_zh": "v. 实施，执行，贯彻（计划、政策、措施等）；n. 工具，器具，用具（尤指用于特定目的的器械）",
+      "pos": [
+        "verb",
+        "noun"
+      ],
+      "synonyms_en": [
+        "execute",
+        "enforce",
+        "carry out",
+        "apply",
+        "tool",
+        "instrument",
+        "device"
+      ],
+      "phrases": [
+        {
+          "phrase": "implement a plan",
+          "meaning_zh": "实施计划"
+        },
+        {
+          "phrase": "implement policy",
+          "meaning_zh": "执行政策"
+        },
+        {
+          "phrase": "agricultural implements",
+          "meaning_zh": "农具"
+        }
+      ],
+      "example": {
+        "en": "The company decided to implement a new strategy to increase market share.",
+        "zh": "公司决定实施一项新战略以提高市场份额。"
+      },
+      "confusions": [
+        {
+          "with": "complement",
+          "tip_zh": "implement 表示“实施、执行”或“工具”，complement 表示“补充、补足”，含义和用法不同。"
+        },
+        {
+          "with": "instrument",
+          "tip_zh": "作为名词时，implement 泛指工具或器具，instrument 常指精密仪器或乐器。"
+        }
+      ],
+      "model_notes": "该词为多词性词汇，动词义在商务、法律、科技等语境中高频出现，常与 plan, policy, strategy 搭配；名词义多用于正式或技术语境，指具体的工具或器具。考试中常考动词义，注意与 execute, carry out 的同义替换。",
+      "srs": {
+        "review_count": 6,
+        "ease": 3.0,
+        "interval_days": 10.35,
+        "next_due_ts": 1756336598.1944907,
+        "last_ts": "2025-08-17T14:52:38.212512",
+        "score": 0.8284999999999998,
+        "last_score": 1.0,
+        "avg_score": 0.8570833333333332,
+        "history": [
+          {
+            "ts": 1755182986.64743,
+            "outcome": 1.0,
+            "score": 0.6499999999999999
+          },
+          {
+            "ts": 1755182993.6047614,
+            "outcome": 1.0,
+            "score": 0.7549999999999999
+          },
+          {
+            "ts": 1755442358.1944907,
+            "outcome": 1.0,
+            "score": 0.8284999999999998
+          }
+        ]
+      }
+    },
+    {
+      "word": "sneakers",
+      "meaning_zh": "n. 运动鞋（尤指轻便的橡胶底休闲鞋，常用于运动或日常穿着）；【美】鬼鬼祟祟的人，卑鄙的人（较少用）",
+      "pos": "noun",
+      "synonyms_en": [
+        "trainers",
+        "athletic shoes",
+        "running shoes",
+        "kicks",
+        "gym shoes"
+      ],
+      "phrases": [
+        {
+          "phrase": "a pair of sneakers",
+          "meaning_zh": "一双运动鞋"
+        },
+        {
+          "phrase": "wear sneakers",
+          "meaning_zh": "穿运动鞋"
+        },
+        {
+          "phrase": "sneaker culture",
+          "meaning_zh": "球鞋文化"
+        }
+      ],
+      "example": {
+        "en": "He bought a new pair of sneakers for the basketball game.",
+        "zh": "他为那场篮球赛买了一双新运动鞋。"
+      },
+      "confusions": [
+        {
+          "with": "trainers",
+          "tip_zh": "trainers 在英式英语中更常用，sneakers 在美式英语中更常用，含义相同。"
+        },
+        {
+          "with": "shoes",
+          "tip_zh": "shoes 泛指各种鞋类，sneakers 特指运动鞋或休闲鞋。"
+        }
+      ],
+      "model_notes": "常用于美式英语，复数形式几乎固定表示运动鞋；单数形式 a sneaker 较少用。口语中也可用 kicks 表示。TOEFL、IELTS 听力和口语中常出现。另有少见义“鬼鬼祟祟的人”，多见于文学或口语描写。",
+      "srs": {
+        "review_count": 6,
+        "ease": 3.0,
+        "interval_days": 10.35,
+        "next_due_ts": 1756336597.875412,
+        "last_ts": "2025-08-17T14:52:37.889070",
+        "score": 0.8284999999999998,
+        "last_score": 1.0,
+        "avg_score": 0.8570833333333332,
+        "history": [
+          {
+            "ts": 1755182987.5609598,
+            "outcome": 1.0,
+            "score": 0.6499999999999999
+          },
+          {
+            "ts": 1755182993.9418917,
+            "outcome": 1.0,
+            "score": 0.7549999999999999
+          },
+          {
+            "ts": 1755442357.875412,
+            "outcome": 1.0,
+            "score": 0.8284999999999998
+          }
+        ]
+      }
+    },
+    {
+      "word": "dough",
+      "meaning_zh": "n. 生面团（由面粉和水等混合而成，用于制作面包、饼干等）；【非正式】钱，金钱（尤指现金）",
+      "pos": "noun",
+      "synonyms_en": [
+        "batter",
+        "pastry",
+        "cash",
+        "money",
+        "bread"
+      ],
+      "phrases": [
+        {
+          "phrase": "knead the dough",
+          "meaning_zh": "揉面团"
+        },
+        {
+          "phrase": "cookie dough",
+          "meaning_zh": "饼干面团"
+        },
+        {
+          "phrase": "earn some dough",
+          "meaning_zh": "赚些钱（非正式）"
+        }
+      ],
+      "example": {
+        "en": "She set the dough aside to rise before baking the bread.",
+        "zh": "她把面团放在一边发酵，然后再烤面包。"
+      },
+      "confusions": [
+        {
+          "with": "batter",
+          "tip_zh": "batter 通常指较稀的面糊（如煎饼、蛋糕用），dough 指较硬、可揉捏的面团。"
+        },
+        {
+          "with": "bread",
+          "tip_zh": "bread 是烤制后的成品面包，dough 是烘烤前的生面团。"
+        }
+      ],
+      "model_notes": "dough 常见于日常生活和烹饪语境，也在口语中作“钱”的俚语用法，尤其在美式英语中频繁出现。考试中可能考察其字面义与引申义的区分。注意与 batter、bread 等词的区别。",
+      "srs": {
+        "review_count": 20,
+        "ease": 3.0,
+        "interval_days": 19683.0,
+        "next_due_ts": 3456053559.7908707,
+        "last_ts": "2025-08-17T14:52:39.804895",
+        "score": 0.9858762375499999,
+        "last_score": 1.0,
+        "avg_score": 0.9865824256724999,
+        "history": [
+          {
+            "ts": 1755182986.29287,
+            "outcome": 1.0,
+            "score": 0.6499999999999999
+          },
+          {
+            "ts": 1755182994.256411,
+            "outcome": 1.0,
+            "score": 0.7549999999999999
+          },
+          {
+            "ts": 1755182994.4465654,
+            "outcome": 1.0,
+            "score": 0.8284999999999998
+          },
+          {
+            "ts": 1755182994.594127,
+            "outcome": 1.0,
+            "score": 0.8799499999999998
+          },
+          {
+            "ts": 1755182994.9566884,
+            "outcome": 1.0,
+            "score": 0.9159649999999997
+          },
+          {
+            "ts": 1755182995.3297622,
+            "outcome": 1.0,
+            "score": 0.9411754999999997
+          },
+          {
+            "ts": 1755182995.5235639,
+            "outcome": 1.0,
+            "score": 0.9588228499999998
+          },
+          {
+            "ts": 1755182995.7520692,
+            "outcome": 1.0,
+            "score": 0.9711759949999998
+          },
+          {
+            "ts": 1755442359.4136055,
+            "outcome": 1.0,
+            "score": 0.9798231964999999
+          },
+          {
+            "ts": 1755442359.7908704,
+            "outcome": 1.0,
+            "score": 0.9858762375499999
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 (() => {
   "use strict";
+
+  // ---- bridge helpers ----
   function getApi() {
     return window.pywebview && window.pywebview.api
       ? window.pywebview.api
@@ -7,10 +9,7 @@
   }
   async function safeCall(fn, ...args) {
     try {
-      if (typeof fn !== "function") {
-        log(`[skip] Bridge missing or method undefined`);
-        return null;
-      }
+      if (typeof fn !== "function") return null;
       return await fn(...args);
     } catch (e) {
       console.error(e);
@@ -20,12 +19,11 @@
   }
   async function callApi(name, ...args) {
     const api = getApi();
-    if (!api || typeof api[name] !== "function") {
-      log(`[skip] Bridge missing: ${name}`);
-      return null;
-    }
+    if (!api || typeof api[name] !== "function") return null;
     return await safeCall(api[name].bind(api), ...args);
   }
+
+  // ---- UI helpers ----
   function addBubble(text, me = false) {
     const tl = document.getElementById("timeline");
     const d = document.createElement("div");
@@ -54,11 +52,14 @@
       .forEach((b) => (b.disabled = !enabled));
   }
 
+  // ---- refs
   const storePathEl = document.getElementById("store-path");
+  const recentSelect = document.getElementById("recent-stores");
   const dailySizeEl = document.getElementById("daily-size");
   const reviewScoreLimitEl = document.getElementById("review-score-limit");
   const ghMode = document.getElementById("gh-mode");
   const ghGroup = document.getElementById("gh-group");
+
   const input = document.getElementById("input");
   document.getElementById("btn-send").addEventListener("click", send);
   input.addEventListener("keydown", (e) => {
@@ -81,12 +82,14 @@
     addBubble(r.assistant || "(no reply)", false);
   }
 
+  // ---- store choose / recent switch ----
   document
     .getElementById("btn-choose-store")
     .addEventListener("click", async () => {
       const r = await callApi("open_store_dialog", "open");
       if (r?.ok) {
         storePathEl.textContent = r.path || "(selected)";
+        await refreshRecent();
         await refreshStats();
         await tryResume();
       } else if (r?.error) {
@@ -94,6 +97,43 @@
       }
     });
 
+  document
+    .getElementById("btn-switch-store")
+    .addEventListener("click", async () => {
+      const sel = recentSelect.value;
+      if (!sel) return;
+      const r = await callApi("switch_store", sel);
+      if (r?.ok) {
+        storePathEl.textContent = r.path;
+        await refreshStats();
+        await tryResume();
+      } else {
+        addBubble("⚠️ " + (r?.error || "切换失败"), false);
+      }
+    });
+
+  async function refreshRecent() {
+    const r = await callApi("list_recent_stores");
+    recentSelect.innerHTML = "";
+    if (r?.ok) {
+      const items = r.items || [];
+      items.forEach((p) => {
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p;
+        recentSelect.appendChild(opt);
+      });
+      if (r.current) {
+        storePathEl.textContent = r.current;
+        const found = Array.from(recentSelect.options).find(
+          (o) => o.value === r.current
+        );
+        if (found) found.selected = true;
+      }
+    }
+  }
+
+  // ------------------- planner/session -------------------
   const fc = {
     mode: "idle",
     masterWords: [],
@@ -125,19 +165,25 @@
         "learn"
       );
     },
+
     async startReviewToday() {
       const r = await callApi("sample_today_all");
       if (!r?.ok || !(r.items || []).length)
-        return addBubble("No words learned today yet.", false);
+        return addBubble("今天还没有学过单词。", false);
       this._startWithList(
         r.items.map((x) => ({ word: x.word, entry: x.entry || null })),
         "review_today"
       );
     },
-    async startReviewByScore(limit) {
-      const r = await callApi("sample_by_score", parseInt(limit, 10));
+
+    async startReviewByScore(limit, learnedOnly = true) {
+      const r = await callApi(
+        "sample_by_score",
+        parseInt(limit, 10),
+        learnedOnly
+      );
       if (!r?.ok || !(r.items || []).length)
-        return addBubble("⚠️ No items available in base.", false);
+        return addBubble("⚠️ 词库里没有可复习的条目。", false);
       this._startWithList(
         r.items.map((x) => ({ word: x.word, entry: x.entry || null })),
         "review_score"
@@ -186,16 +232,15 @@
       this._show(0);
       saveSession();
     },
+
     _nextGroup() {
       this.groupStart += this.groupSize;
-      if (this.groupStart >= this.masterWords.length) {
-        this._finishPlan();
-      } else {
-        this._startGroup();
-      }
+      if (this.groupStart >= this.masterWords.length) this._finishPlan();
+      else this._startGroup();
     },
+
     _finishPlan() {
-      addBubble("🎯 Plan complete for this mode.", false);
+      addBubble("🎯 本轮计划完成。", false);
       document.getElementById("session-banner").classList.add("hidden");
       saveSession(true);
       refreshStats();
@@ -205,14 +250,17 @@
       if (!this.activeWords.length) return this._finishPlan();
       this.activeIndex = Math.max(0, Math.min(i, this.activeWords.length - 1));
       this.current = this.activeWords[this.activeIndex];
+
       document.querySelector(".face-front").classList.remove("hidden");
       document.querySelector(".face-back").classList.add("hidden");
       document.getElementById("fc-word").textContent = this.current.word;
       setQuickActionsEnabled(true);
       this.backBusy = false;
+
       this._updateProgress();
       await this._ensureCardData(this.current);
       this._prefetchNext(3);
+
       await callApi(
         "record_signal_tool",
         this.current.word,
@@ -227,6 +275,7 @@
       document.querySelector(".face-back").classList.toggle("hidden");
       this._updateBackButtons();
     },
+
     _updateBackButtons() {
       const showVerify = !!this.needVerify;
       document
@@ -241,6 +290,7 @@
       if (this.frontBusy || this.backBusy) return;
       this.frontBusy = true;
       setQuickActionsEnabled(false);
+
       this.needVerify = !!remembered;
       const w = this.current;
       await callApi(
@@ -250,8 +300,10 @@
         `${this.mode}:${this.stage}`
       );
       if (!remembered) this.weakSet.add(w.word);
+
       await this._ensureCardData(w);
       this._renderBack(w);
+
       this._flip();
       this.frontBusy = false;
       saveSession();
@@ -279,6 +331,7 @@
       this.backBusy = true;
       setButtonsEnabled("verify-actions", false);
       setButtonsEnabled("next-actions", false);
+
       const w = this.current;
       await callApi(
         "record_signal_tool",
@@ -289,8 +342,14 @@
       this.seenStates[this.activeIndex] = ok ? "ok" : "weak";
       if (ok && this.stage === "weakloop") this.weakSet.delete(w.word);
       if (!ok) this.weakSet.add(w.word);
+
+      // 关键修复：记录“今天学过该词”
+      await callApi("note_learn_event", w.word);
+
+      // 同步 SRS 与平均分：正确=1.0，错误=0.0
       await callApi("commit_review", w.word, ok ? 1.0 : 0.0);
       await callApi("update_score", w.word, ok ? 1.0 : 0.0);
+
       await refreshStats();
       this._updateProgress();
       await this._next();
@@ -304,12 +363,18 @@
       this.backBusy = true;
       setButtonsEnabled("verify-actions", false);
       setButtonsEnabled("next-actions", false);
+
       const w = this.current;
       await callApi("record_signal_tool", w.word, "verify", "verified_wrong");
       this.seenStates[this.activeIndex] = "weak";
       this.weakSet.add(w.word);
+
+      // 同样记录“今天学过该词”（幂等）
+      await callApi("note_learn_event", w.word);
+
       await callApi("commit_review", w.word, 0.0);
       await callApi("update_score", w.word, 0.0);
+
       await refreshStats();
       this._updateProgress();
       await this._next();
@@ -336,6 +401,7 @@
       ).textContent = `${idx}/${total} (${
         this.stage === "firstpass" ? "Pass 1/1" : "Weak loop"
       })`;
+
       const el = document.getElementById("heat");
       el.innerHTML = "";
       for (let i = 0; i < this.seenStates.length; i++) {
@@ -351,6 +417,7 @@
       const r = await callApi("get_word", w.word);
       if (r && (r.entry || r.item)) w.entry = r.entry || r.item;
     },
+
     async _prefetchNext(n = 3) {
       for (let j = 1; j <= n; j++) {
         const idx = this.activeIndex + j;
@@ -360,6 +427,7 @@
     },
   };
 
+  // ---- persistence ----
   async function saveSession(clear = false) {
     const st = clear
       ? null
@@ -406,56 +474,69 @@
     }
   }
 
+  // ---- donut chart ----
   function renderDonut(snapshot) {
     const total = snapshot.total || 0;
     const mastered = snapshot.mastered || 0;
-    const learnedOnly = Math.max(0, (snapshot.learned || 0) - mastered);
-    const seg1 = document.querySelector(".donut-seg.mastered");
-    const seg2 = document.querySelector(".donut-seg.learned");
-    const seg3 = document.querySelector(".donut-seg.notlearned");
-    const CIRC = 2 * Math.PI * 54;
-    const p1 = total ? mastered / total : 0;
-    const p2 = total ? learnedOnly / total : 0;
-    const p3 = Math.max(0, 1 - p1 - p2);
-    seg1.setAttribute(
+    const learned = snapshot.learned || 0;
+    const learnedOnly = Math.max(0, learned - mastered);
+    const rest = Math.max(0, total - mastered - learnedOnly);
+
+    const CIRC = 2 * Math.PI * 54; // r=54
+    const segM = document.getElementById("donut-seg-mastered");
+    const segL = document.getElementById("donut-seg-learned");
+    const segR = document.getElementById("donut-seg-rest");
+    const label = document.getElementById("donut-label");
+
+    const pM = total ? mastered / total : 0;
+    const pL = total ? learnedOnly / total : 0;
+    const pR = Math.max(0, 1 - pM - pL);
+
+    // dasharray = [visible, hidden]; 旋转 -90° 从正上开始
+    segM.setAttribute(
       "stroke-dasharray",
-      (CIRC * p1).toFixed(3) + " " + (CIRC * (1 - p1)).toFixed(3)
+      (CIRC * pM).toFixed(3) + " " + (CIRC * (1 - pM)).toFixed(3)
     );
-    seg2.style.strokeDashoffset = (-CIRC * p1).toFixed(3);
-    seg2.setAttribute(
+    segL.style.strokeDashoffset = (-CIRC * pM).toFixed(3);
+    segL.setAttribute(
       "stroke-dasharray",
-      (CIRC * p2).toFixed(3) + " " + (CIRC * (1 - p2)).toFixed(3)
+      (CIRC * pL).toFixed(3) + " " + (CIRC * (1 - pL)).toFixed(3)
     );
-    seg3.style.strokeDashoffset = (-(CIRC * (p1 + p2))).toFixed(3);
-    seg3.setAttribute(
+    segR.style.strokeDashoffset = (-(CIRC * (pM + pL))).toFixed(3);
+    segR.setAttribute(
       "stroke-dasharray",
-      (CIRC * p3).toFixed(3) + " " + (CIRC * (1 - p3)).toFixed(3)
+      (CIRC * pR).toFixed(3) + " " + (CIRC * (1 - pR)).toFixed(3)
     );
-    document.getElementById("donut-label").textContent = total
-      ? Math.round(((mastered + learnedOnly) * 100) / total) + "%"
-      : "0%";
+
+    const pct = total
+      ? Math.round(((mastered + learnedOnly) * 100) / total)
+      : 0;
+    label.textContent = pct + "%";
   }
+
   async function refreshStats() {
     const snap = await callApi("progress_snapshot");
     if (!snap) return;
-    document.getElementById("stat-today").textContent = snap.today_learned || 0;
-    document.getElementById("stat-total").textContent = snap.learned || 0;
     renderDonut(snap);
   }
 
+  // ---- hooks ----
   document
     .getElementById("btn-start-daily")
     .addEventListener("click", () =>
       fc.startDailyPlan(dailySizeEl.value || 100)
     );
+
   document
     .getElementById("btn-review-today")
     .addEventListener("click", () => fc.startReviewToday());
-  document
-    .getElementById("btn-review-score")
-    .addEventListener("click", () =>
-      fc.startReviewByScore(reviewScoreLimitEl.value || 100)
-    );
+
+  document.getElementById("btn-review-score").addEventListener("click", () => {
+    const limit = reviewScoreLimitEl.value || 100;
+    const includeUnseen = !!document.getElementById("include-unseen")?.checked;
+    // learned_only = !includeUnseen
+    fc.startReviewByScore(limit, !includeUnseen);
+  });
 
   document
     .getElementById("btn-remember")
@@ -473,6 +554,7 @@
     .getElementById("btn-next")
     .addEventListener("click", () => fc.nextAfterShow());
 
+  // ---- keyboard (idempotent-aware) ----
   document.addEventListener("keydown", (e) => {
     if (e.target && e.target.tagName === "TEXTAREA") return;
     const k = e.key.toLowerCase();
@@ -480,6 +562,7 @@
       .querySelector(".face-back")
       .classList.contains("hidden");
     if (fc.frontBusy || fc.backBusy) return;
+
     if (k === " ") {
       if (back && !fc.needVerify) return fc.nextAfterShow();
       fc._flip();
@@ -500,9 +583,15 @@
     }
   });
 
+  // ---- init ----
   (async function init() {
+    const cur = await callApi("get_current_store_path");
+    if (cur?.ok && cur.path) storePathEl.textContent = cur.path;
+    await refreshRecent();
     await refreshStats();
     await tryResume();
   })();
+
+  // expose
   window.fc = fc;
 })();

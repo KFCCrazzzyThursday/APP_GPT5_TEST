@@ -1,143 +1,391 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN" data-theme="dark">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Vocab Suite — Daily Plan + Review</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Vocab Suite</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root {
+            --bg: #0b1220;
+            --panel: #0f172a;
+            --border: #233045;
+            --text: #e5e7eb;
+            --muted: #9aa4b2;
+            --primary: #60a5fa;
+            --good: #34d399;
+            --bad: #f87171;
+            --accent: #fbbf24;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: var(--panel);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .grow {
+            flex: 1 1 auto;
+        }
+
+        .label {
+            color: var(--muted);
+        }
+
+        .badge {
+            background: #101b31;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn {
+            padding: 6px 10px;
+            border: 1px solid var(--border);
+            background: #0c1529;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        .btn:hover {
+            border-color: #32507a;
+        }
+
+        .btn:disabled {
+            opacity: .6;
+            cursor: default;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            background: var(--panel);
+        }
+
+        #timeline {
+            height: 200px;
+            overflow: auto;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px;
+            background: #0c162b;
+        }
+
+        .bubble {
+            padding: 8px 10px;
+            border-radius: 10px;
+            margin: 6px 0;
+            max-width: 80%;
+        }
+
+        .bubble.me {
+            background: #12325c;
+            margin-left: auto;
+        }
+
+        .bubble.bot {
+            background: #0e223f;
+        }
+
+        #logbox {
+            height: 120px;
+            overflow: auto;
+            border: 1px dashed var(--border);
+            padding: 8px;
+            white-space: pre-wrap;
+            background: #0c1529;
+            color: #cbd5e1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .fc {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .face {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 180px;
+            background: #0c162b;
+        }
+
+        .word {
+            font-size: 28px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .meaning {
+            margin-top: 8px;
+            color: #d1d5db;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: #0c1529;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .bar {
+            height: 8px;
+            width: 0%;
+            background: var(--primary);
+        }
+
+        #heat {
+            display: flex;
+            gap: 2px;
+        }
+
+        .cell {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            background: #131f37;
+            border: 1px solid var(--border);
+        }
+
+        .cell.ok {
+            background: #0f5132;
+            border-color: #1f7a55;
+        }
+
+        .cell.weak {
+            background: #5f1f1f;
+            border-color: #7c2d2d;
+        }
+
+        .quick-actions button {
+            min-width: 84px;
+        }
+
+        .toggle {
+            user-select: none;
+            color: var(--muted);
+        }
+
+        .session-banner {
+            background: #2b1b05;
+            border: 1px solid #8a5d12;
+            color: #f6d58f;
+            padding: 6px 10px;
+            border-radius: 8px;
+        }
+
+        .store-select {
+            min-width: 260px;
+            background: #0c1529;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px;
+        }
+
+        footer {
+            color: #667085;
+            padding: 8px 16px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            background: #0a1020;
+        }
+
+        /* donut */
+        .donut-wrap {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .donut-legend {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .lgd {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .dot.mastered {
+            background: var(--good);
+        }
+
+        .dot.learned {
+            background: var(--accent);
+        }
+
+        .dot.notlearn {
+            background: #334155;
+        }
+
+        .donut-label {
+            fill: #e5e7eb;
+            font-weight: 700;
+            font-size: 16px;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+    </style>
 </head>
 
 <body>
-    <aside id="sidebar">
-        <header>
-            <h1>Vocab Suite</h1>
-        </header>
+    <header>
+        <div class="row grow">
+            <span class="label">当前词库：</span>
+            <span id="store-path" class="badge">(未选择)</span>
+            <button id="btn-choose-store" class="btn">选择词库...</button>
+            <select id="recent-stores" class="store-select"></select>
+            <button id="btn-switch-store" class="btn">切换</button>
+        </div>
+        <div class="row">
+            <span class="label">模式：</span><span id="gh-mode" class="badge">Idle</span>
+            <span class="label">组：</span><span id="gh-group" class="badge">-</span>
+        </div>
+    </header>
 
-        <nav>
-            <button id="btn-choose-store" class="secondary">Choose Vocab Base…</button>
-            <div id="store-path" class="store-path">(no base selected)</div>
-
-            <hr class="sep" />
-
-            <div class="field">
-                <label for="daily-size">Daily target (words)</label>
-                <input id="daily-size" type="number" min="10" step="10" value="100" />
+    <div class="grid">
+        <!-- 左：对话/日志 -->
+        <div class="card">
+            <div class="row">
+                <textarea id="input" rows="2"
+                    style="width:100%; background:#0c1529; color:#e5e7eb; border:1px solid var(--border); border-radius:8px;"></textarea>
+                <button id="btn-send" class="btn">发送</button>
             </div>
-            <button id="btn-start-daily" class="primary">Start Daily Plan (Groups of 10)</button>
+            <div id="timeline"></div>
+            <pre id="logbox"></pre>
+        </div>
 
-            <hr class="sep" />
-
-            <div class="field">
-                <label for="review-score-limit">Review by Score — deck size</label>
-                <input id="review-score-limit" type="number" min="10" step="10" value="100" />
+        <!-- 右：学习 & 统计 -->
+        <div class="card fc">
+            <div class="row">
+                <div class="session-banner hidden" id="session-banner"></div>
             </div>
-            <button id="btn-review-today">Review Today (All)</button>
-            <button id="btn-review-score">Review by Score (Ebbinghaus)</button>
-        </nav>
 
-        <section class="legend">
-            <div><span class="dot todo"></span>Not Seen</div>
-            <div><span class="dot weak"></span>Weak</div>
-            <div><span class="dot ok"></span>Correct</div>
-        </section>
-
-        <section id="day-stats" class="day-stats">
-            <div class="stat"><span class="label">Learned today (unique)</span><span class="value"
-                    id="stat-today">0</span></div>
-            <div class="stat"><span class="label">Total learned</span><span class="value" id="stat-total">0</span></div>
-        </section>
-    </aside>
-
-    <main id="main" class="twocol">
-        <!-- LEFT: Flashcards -->
-        <section id="flashcard-panel">
-            <div id="session-banner" class="banner hidden"></div>
-
-            <div class="group-head">
-                <div class="gh-left">
-                    <span id="gh-mode">—</span>
-                </div>
-                <div class="gh-right">
-                    <span id="gh-group">Group 0/0</span>
+            <!-- 饼图（Donut） -->
+            <div class="row donut-wrap">
+                <svg id="donut" width="140" height="140" viewBox="0 0 120 120" role="img" aria-label="progress">
+                    <circle cx="60" cy="60" r="54" stroke="#334155" stroke-width="12" fill="none"></circle>
+                    <circle id="donut-seg-mastered" cx="60" cy="60" r="54" stroke="#34d399" stroke-width="12"
+                        fill="none" stroke-dasharray="0 339.292" transform="rotate(-90 60 60)"></circle>
+                    <circle id="donut-seg-learned" cx="60" cy="60" r="54" stroke="#fbbf24" stroke-width="12" fill="none"
+                        stroke-dasharray="0 339.292" transform="rotate(-90 60 60)"></circle>
+                    <circle id="donut-seg-rest" cx="60" cy="60" r="54" stroke="#233045" stroke-width="12" fill="none"
+                        stroke-dasharray="339.292 0" transform="rotate(-90 60 60)"></circle>
+                    <text id="donut-label" class="donut-label" x="60" y="60">0%</text>
+                </svg>
+                <div class="donut-legend">
+                    <span class="lgd"><i class="dot mastered"></i> 掌握</span>
+                    <span class="lgd"><i class="dot learned"></i> 已学未掌握</span>
+                    <span class="lgd"><i class="dot notlearn"></i> 未学</span>
                 </div>
             </div>
 
-            <div class="card-container">
-                <div class="card face-front">
-                    <h1 id="fc-word">—</h1>
-                    <div class="quick-actions">
-                        <button id="btn-remember" class="btn-remember">✓ I Know (1/Y)</button>
-                        <button id="btn-forget" class="btn-forget">✗ I Don't Know (2/N)</button>
-                    </div>
-                </div>
+            <div class="row">
+                <input id="daily-size" type="number" value="100"
+                    style="width:100px; background:#0c1529; color:#e5e7eb; border:1px solid var(--border); border-radius:8px;" />
+                <button id="btn-start-daily" class="btn">Start daily plan</button>
 
-                <div class="card face-back hidden">
-                    <h2 id="fc-back-word">—</h2>
-                    <div id="fc-meaning" class="meaning">—</div>
-                    <div id="fc-phrases" class="phrases"></div>
-                    <div id="fc-example" class="example"></div>
+                <button id="btn-review-today" class="btn">Review today</button>
 
-                    <!-- Verify buttons show only if user chose "I Know" -->
-                    <div class="verify-actions" id="verify-actions">
-                        <button id="btn-correct">✓ Correct (1/Y)</button>
-                        <button id="btn-wrong">✗ Wrong (2/N)</button>
-                    </div>
+                <input id="review-score-limit" type="number" value="100"
+                    style="width:100px; background:#0c1529; color:#e5e7eb; border:1px solid var(--border); border-radius:8px;" />
+                <label class="toggle"><input type="checkbox" id="include-unseen"> 包含未学词</label>
+                <button id="btn-review-score" class="btn">Review by score</button>
+            </div>
 
-                    <!-- Next-only for "I Don't Know" -->
-                    <div class="verify-actions hidden" id="next-actions">
-                        <button id="btn-next">Next → (Space/→)</button>
-                    </div>
+            <!-- 单词面板 -->
+            <div class="face face-front">
+                <div class="word" id="fc-word">—</div>
+                <div class="actions quick-actions">
+                    <button id="btn-remember" class="btn">我记得</button>
+                    <button id="btn-forget" class="btn">我不记得</button>
                 </div>
             </div>
 
-            <div class="progress-wrap">
-                <div class="row">
-                    <span class="progress-text" id="fc-progress-text">0/0 (Pass 1/1)</span>
-                </div>
-                <div class="progress">
-                    <div class="progress-fill" id="fc-progress"></div>
-                </div>
-                <div id="heat" class="heat"></div>
-            </div>
-        </section>
+            <div class="face face-back hidden">
+                <div class="word" id="fc-back-word">—</div>
+                <div class="meaning" id="fc-meaning"></div>
+                <div id="fc-phrases"></div>
+                <div id="fc-example"></div>
 
-        <!-- RIGHT: Chat + Stats -->
-        <section id="chat-pane">
-            <div id="charts">
-                <div class="chart-card">
-                    <svg id="donut" viewBox="0 0 120 120" role="img" aria-label="Mastery distribution">
-                        <circle cx="60" cy="60" r="54" class="donut-track"></circle>
-                        <circle cx="60" cy="60" r="54" class="donut-seg mastered" stroke-dasharray="0 339.292"></circle>
-                        <circle cx="60" cy="60" r="54" class="donut-seg learned" stroke-dasharray="0 339.292"></circle>
-                        <circle cx="60" cy="60" r="54" class="donut-seg notlearned" stroke-dasharray="339.292 0">
-                        </circle>
-                        <text x="60" y="60" text-anchor="middle" dominant-baseline="middle" class="donut-label"
-                            id="donut-label">0%</text>
-                    </svg>
-                    <div class="legend2">
-                        <span class="dot ok"></span><span>Mastered</span>
-                        <span class="dot learned"></span><span>Learned</span>
-                        <span class="dot todo"></span><span>Not learned</span>
-                    </div>
+                <div class="actions" id="verify-actions">
+                    <button id="btn-correct" class="btn">判断正确</button>
+                    <button id="btn-wrong" class="btn">判断错误</button>
+                </div>
+
+                <div class="actions hidden" id="next-actions">
+                    <button id="btn-next" class="btn">下一张</button>
                 </div>
             </div>
 
-            <section id="timeline"></section>
+            <div class="progress">
+                <div id="fc-progress" class="bar"></div>
+            </div>
+            <div class="row"><span id="fc-progress-text" class="label">0/0</span></div>
+            <div id="heat"></div>
+        </div>
+    </div>
 
-            <details id="logs">
-                <summary id="logs-header">工具调用日志</summary>
-                <pre id="logbox"></pre>
-            </details>
-
-            <footer id="inputbar">
-                <textarea id="input" rows="1" placeholder="Shift+Enter 换行，Enter 发送"></textarea>
-                <button id="btn-send" type="button">发送</button>
-            </footer>
-        </section>
-    </main>
-
-    <script src="app.js"></script>
+    <footer>Vocab Suite — WebView</footer>
+    <script src="./app.js"></script>
 </body>
 
 </html>
